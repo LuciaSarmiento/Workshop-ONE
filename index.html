@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Workshop ONE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Workshop1">
+    <meta name="author" content="Equipo O-Verse">
+    <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+
+    <script>
+      AFRAME.registerComponent("link-click", {
+        init: function() {
+          this.el.addEventListener("click", (e) => {
+            window.location = this.data.href;
+          })
+        }
+      })
+    </script>
+
+  </head>
+
+  <body>
+    <div id="logo-container">
+      <div class="loading-spinner"></div>
+    </div>
+    <div id="aframe-scene">
+
+    <a-scene
+    camera-position
+    raycaster="far: 100; objects: [link];"
+    info-message="htmlSrc: #instrucciones">
+    
+    <a-assets>
+       <a-gltf-model id="casa_glb" shadow="receive:true;cast:true;" src="assets/objects/casa.glb"  crossorigin="anonymous"></a-gltf-model>
+    </a-assets>
+
+    <a-entity id="cameraRig"
+        wasd-controls
+        look-controls="pointerLockEnabled: false"
+        simple-navmesh-constraint="navmesh:.navmesh;fall:0.5;height:0.8;exclude:.navmesh-hole;"
+        movement-controls="speed:2;camera:#head;"
+        position="0 0.8 19" rotation="0 0 0" >
+        <a-entity id="head"
+            camera="near:0.01;"
+            position="0 2.65 0">
+            <a-cursor id="mainCursor"
+            position="0 0 -0.5"
+            geometry="primitive: ring; radiusInner: 0.0045; radiusOuter: 0.008"
+            material="opacity: 0.6; shader: flat" 
+            cursor="rayOrigin: fuse">
+            </a-cursor>
+        </a-entity>
+    </a-entity>>
+
+    <a-entity id="casa" gltf-model="#casa_glb"  position="0 -120 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+
+    </a-scene>
+    </div>  
+
+    <script defer type="module">
+      window.onload = function() {
+        var maincursor = document.getElementById('mainCursor');
+      console.log(maincursor);
+      
+      setTimeout(function() {
+        while (!maincursor){
+        setTimeout(function() {
+          location.reload();
+        }, 1000);
+      }
+      }, 3000);
+        document.getElementById('aframe-scene').style.display = 'block';
+        setTimeout(function() {
+          var logo = document.getElementById('logo-container');
+          logo.style.display = 'none';
+        }, 5000);
+      }
+    </script>	
+  </body>
+</html>
