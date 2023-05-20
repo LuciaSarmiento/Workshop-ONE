@@ -412,3 +412,4 @@ https://<IP_address>/
 [OCI docs ](https://docs.oracle.com/en-us/iaas/Content/home.htm)
 [Figuras 3D ](https://sketchfab.com/3d-models)
 [Imagenes 360 AI ](https://skybox.blockadelabs.com/)
+
