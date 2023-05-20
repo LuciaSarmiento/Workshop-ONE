@@ -8,16 +8,10 @@
     <meta name="author" content="Equipo O-Verse">
     <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <!-- <script src="https://rawgit.com/protyze/aframe-joystick-component/master/dist/aframe-joystick-component.min.js"></script> -->
 
-    <script>
-      AFRAME.registerComponent("link-click", {
-        init: function() {
-          this.el.addEventListener("click", (e) => {
-            window.location = this.data.href;
-          })
-        }
-      })
-    </script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/controls.js"></script>
 
   </head>
 
@@ -26,57 +20,79 @@
       <div class="loading-spinner"></div>
     </div>
     <div id="aframe-scene">
+      <a-scene loading-screen="enabled:false;"  reflection="directionalLight:#dirlight;" renderer="alpha:true;physicallyCorrectLights:true;colorManagement:true;">
+      
+        <a-assets>
+          <a-gltf-model id="casa_glb" shadow="receive:true;cast:true;" src="assets/objects/casa.glb"  crossorigin="anonymous"></a-gltf-model>
+        </a-assets>
 
-    <a-scene
-    camera-position
-    raycaster="far: 100; objects: [link];"
-    info-message="htmlSrc: #instrucciones">
-    
-    <a-assets>
-       <a-gltf-model id="casa_glb" shadow="receive:true;cast:true;" src="assets/objects/casa.glb"  crossorigin="anonymous"></a-gltf-model>
-    </a-assets>
+        <!-- Casa compleya -->
+        <a-entity id="casa" gltf-model="#casa_glb"  position="0 0 0" rotation="0 0 0" scale="0.1 0.1 0.1"></a-entity>
 
-    <a-entity id="cameraRig"
-        wasd-controls
-        look-controls="pointerLockEnabled: false"
-        simple-navmesh-constraint="navmesh:.navmesh;fall:0.5;height:0.8;exclude:.navmesh-hole;"
-        movement-controls="speed:2;camera:#head;"
-        position="0 0.8 19" rotation="0 0 0" >
-        <a-entity id="head"
+        <a-box class="interactable" src="./assets/img/push me.png" position="-5 15 0" rotation="0 0 0" scale="3 3 3"></a-box>
+
+        <!-- Luz -->
+        <a-light id="dirlight" intensity="2" light="castShadow:false;type:hemisphere" position="0 -6 0"></a-light>
+        <a-entity light="type: hemisphere; intensity: 0.2" position="15 20 9"></a-entity> 
+        <a-entity light="type: hemisphere; intensity: 0.5" position="12 20 18"></a-entity> 
+
+        <!-- Camara -->
+        <a-entity id="cameraRig" 
+          wasd-controls
+          look-controls="pointerLockEnabled: false"
+          simple-navmesh-constraint="navmesh:.navmesh;fall:0.5;height:5;exclude:.navmesh-hole;"
+          movement-controls="speed:10;camera:#head;"
+          position="-5 13 10" rotation="0 0 0" >
+          <a-entity id="head"
             camera="near:0.01;"
-            position="0 2.65 0">
-            <a-cursor id="mainCursor"
-            position="0 0 -0.5"
-            geometry="primitive: ring; radiusInner: 0.0045; radiusOuter: 0.008"
-            material="opacity: 0.6; shader: flat" 
-            cursor="rayOrigin: fuse">
+            position="0 2 0">
+            <a-cursor id="mainCursor" 
+              position="0 0 -0.5"
+              geometry="primitive: ring; radiusInner: 0.0045; radiusOuter: 0.008"
+              material="opacity: 0.6; shader: flat" 
+              cursor="rayOrigin: fuse"
+              raycaster="objects: .interactable">
             </a-cursor>
+          </a-entity>
         </a-entity>
-    </a-entity>>
-
-    <a-entity id="casa" gltf-model="#casa_glb"  position="0 -120 0" rotation="0 0 0" scale="1 1 1"></a-entity>
-
-    </a-scene>
+        
+      </a-scene>
     </div>  
+    <div id="mobile-controls">
+      <div class="button-row">
+        <button id="forward" class="control-button" new_position_value="-0.1">W</button>
+      </div>
+      <div class="button-row">
+        <button id="right" class="control-button" new_position_value="0.1">D</button>
+        <button id="backward" class="control-button" new_position_value="0.1">S</button>
+        <button id="left" class="control-button" new_position_value="-0.1">A</button>
+      </div>
+    </div>
+    
+    
 
+    
     <script defer type="module">
       window.onload = function() {
         var maincursor = document.getElementById('mainCursor');
-      console.log(maincursor);
-      
-      setTimeout(function() {
-        while (!maincursor){
+        var actual_rotation = cameraRig.getAttribute('rotation');
+
         setTimeout(function() {
-          location.reload();
-        }, 1000);
-      }
-      }, 3000);
+          while (!maincursor){
+          setTimeout(function() {
+            location.reload();
+          }, 1000);
+        }
+        }, 3000);
         document.getElementById('aframe-scene').style.display = 'block';
         setTimeout(function() {
           var logo = document.getElementById('logo-container');
           logo.style.display = 'none';
+          actual_rotation.x = 0;
         }, 5000);
+
       }
     </script>	
+
   </body>
 </html>
