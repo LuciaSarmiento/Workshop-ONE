@@ -411,3 +411,4 @@ https://<IP_address>/
 [Aframe docs ]( https://aframe.io/docs/1.3.0/introduction/)
 [OCI docs ](https://docs.oracle.com/en-us/iaas/Content/home.htm)
 [Figuras 3D ](https://sketchfab.com/3d-models)
+[Imagenes 360 AI ](https://skybox.blockadelabs.com/)
