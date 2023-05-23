@@ -24,12 +24,18 @@
       
         <a-assets>
           <a-gltf-model id="casa_glb" shadow="receive:true;cast:true;" src="assets/objects/casa.glb"  crossorigin="anonymous"></a-gltf-model>
+          <a-gltf-model id="perro_glb" shadow="receive:true;cast:true;" src="assets/objects/perro.glb"  crossorigin="anonymous"></a-gltf-model>
+          <img id="cielo" src="assets/img/entorno.jpg">
         </a-assets>
 
         <!-- Casa completa -->
         <a-entity id="casa" gltf-model="#casa_glb"  position="0 0 0" rotation="0 0 0" scale="0.1 0.1 0.1"></a-entity>
 
+        <!-- Objetos -->
         <a-box class="interactable" src="./assets/img/push me.png" position="-5 15 0" rotation="0 0 0" scale="3 3 3"></a-box>
+        <a-entity id="perro" gltf-model="#perro_glb"  position="-4 4 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+
+        <a-sky src="#cielo"></a-sky>
 
         <!-- Luz -->
         <a-light id="dirlight" intensity="2" light="castShadow:false;type:hemisphere" position="0 -6 0"></a-light>
